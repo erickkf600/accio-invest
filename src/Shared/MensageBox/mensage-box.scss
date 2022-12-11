@@ -1,0 +1,71 @@
+@import './../../styles/utils/variables';
+@import './../../styles/utils/mixins';
+
+.react-confirm-alert-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+.msg-box {
+    background: #fff;
+    padding: 30px 15px 18px;
+    border-radius: $radius5;
+    width: 215px;
+    max-width: 300px;
+    position: relative;
+    &:before {
+        content: '';
+        position: absolute;
+        top: -35px;
+        left: 0;
+        right: 0;
+        display: flex;
+        margin: auto;
+        width: 70px;
+        height: 70px;
+        background: $white;
+        border-radius: $radius100;
+    }
+
+    &__icon {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -26px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        background: $default-background;
+        color: $blue-dark;
+        width: 50px;
+        height: 50px;
+        border-radius: $radius100;
+        font-size: $text16px;
+    }
+    &__title {
+        margin-bottom: 20px;
+        color: $blue-dark;
+        font: {
+            size: $header24px;
+            weight: 700;
+        }
+    }
+    &__text {
+        color: $gray;
+        letter-spacing: 1px;
+        font: {
+            size: $text16px;
+            weight: 400;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        button {
+            padding: 5px 10px
+        }
+    }
+}
+
+
