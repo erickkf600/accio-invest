@@ -1,20 +1,54 @@
 import React, { useEffect, useState } from 'react'
 import Template from './template'
 import './wallet.scss'
-import { getHistoryApport, getAssetsList } from '../../service/http/app.get'
+import {
+    getAssetsList,
+    getDividendsList,
+    getAportsList,
+    getPatrimonyList,
+    getVariatonsList,
+    getDividensGraph,
+} from '../../service/http/app.get'
 import { useSessionStorage } from '../../components/SelectMounth/toggle.provider'
 const Wallet: React.FC = () => {
     const { selected } = useSessionStorage()
     const [aports, setAports] = useState<any>([])
     const [assets, setAssets] = useState<any>([])
+    const [dividends, setDividends] = useState<any>([])
+    const [patrimony, setPatrimony] = useState<any>([])
+    const [variations, setVariations] = useState<any>([])
+    const [dataGraph, setDataGraph] = useState<any>([])
 
     useEffect(() => {
         getAssets()
-        getHistory()
+        getDividends()
+        getAports()
+        getPatrimony()
+        getVariatons()
+        getDataGraph()
     }, [])
 
-    const getHistory = () => {
-        getHistoryApport(selected.year || new Date().getFullYear())
+    const getAssets = () => {
+        getAssetsList()
+            .then((res: any) => {
+                setAssets(res)
+            })
+            .catch((err: any) => {
+                console.error(err)
+            })
+    }
+
+    const getDividends = () => {
+        getDividendsList()
+            .then((res: any) => {
+                setDividends(res)
+            })
+            .catch((err: any) => {
+                console.error(err)
+            })
+    }
+    const getAports = () => {
+        getAportsList()
             .then((res: any) => {
                 setAports(res)
             })
@@ -22,17 +56,43 @@ const Wallet: React.FC = () => {
                 console.error(err)
             })
     }
-    const getAssets = () => {
-        getAssetsList()
+    const getPatrimony = () => {
+        getPatrimonyList()
             .then((res: any) => {
-                setAssets(res)
-                console.log(res)
+                setPatrimony(res)
             })
             .catch((err: any) => {
                 console.error(err)
             })
     }
-    return <Template aports={aports} assets={assets} />
+    const getVariatons = () => {
+        getVariatonsList()
+            .then((res: any) => {
+                setVariations(res)
+            })
+            .catch((err: any) => {
+                console.error(err)
+            })
+    }
+    const getDataGraph = () => {
+        getDividensGraph(selected?.year || new Date().getFullYear())
+            .then((res: any) => {
+                setDataGraph(res)
+            })
+            .catch((err: any) => {
+                console.error(err)
+            })
+    }
+    return (
+        <Template
+            aports={aports}
+            assets={assets}
+            dividends={dividends}
+            patrimony={patrimony}
+            variations={variations}
+            dataGraph={dataGraph}
+        />
+    )
 }
 
 export default Wallet

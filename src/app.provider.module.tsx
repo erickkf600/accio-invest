@@ -6,7 +6,6 @@ import {
 } from './components/SelectMounth/toggle.provider'
 import ResumeMovimentacaoProvider from './pages/Add/AddOperation/add-perations.provider'
 import AssetsTypesProvider from './service/providers/assets.provider'
-import CardsProvider from './service/providers/cards.provider'
 import MonthsProvider from './service/providers/month.provider'
 import OperationTypesProvider from './service/providers/operation_types.provider'
 import RouteChangeProvider from './service/providers/route.provider.tsx'
@@ -16,7 +15,6 @@ export const Providers = (input: any) => {
     return(
     <RouteChangeProvider>
     <MonthsProvider>
-    <CardsProvider>
     <UsersProvider>
     <ConfirmModalProvider>
     <OpenToolBoxProvider>
@@ -32,7 +30,6 @@ export const Providers = (input: any) => {
     </OpenToolBoxProvider>
     </ConfirmModalProvider>
     </UsersProvider>
-    </CardsProvider>
     </MonthsProvider>
     </RouteChangeProvider>
 

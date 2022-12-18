@@ -1,29 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Bars from '../../components/Charts/Bars'
-import { TableContent } from '../../interfaces/table.interface'
 import { dataMock } from '../../mocks/data.mock'
 import Table from '../../Shared/Table'
+import {
+    head,
+    headAporst,
+    headDividend,
+    headPatrimony,
+    headVariations,
+} from './headers.mock'
 const Template: React.FC<any> = input => {
-    const head: TableContent[] = [
-        {
-            name: 'Cod',
-            key: 'cod',
-        },
-        {
-            name: 'Operação',
-            key: 'type',
-        },
-        {
-            name: 'Prc. Atual',
-            key: 'curr_price',
-            currency: true,
-        },
-        {
-            name: 'DVs. Pd',
-            key: 'payed_dividend',
-            currency: true,
-        },
-    ]
+    const [total, setTotal] = useState(0)
+    useEffect(() => {
+        setTotal(
+            input.aports.reduce((acc: any, { value }: any) => acc + value, 0),
+        )
+    }, [input.aports])
     return (
         <section className="wallet">
             <h1>Minha Carteira</h1>
@@ -36,28 +28,59 @@ const Template: React.FC<any> = input => {
                     </div>
                 </div>
                 <div>
-                    <p className="wallet__tables-titles">
-                        Lista de dividendos
-                        {/* lista de aportes com vizualização de nota de corretagem? */}
-                    </p>
-                    <div className="card wallet__tables-cards"></div>
+                    <p className="wallet__tables-titles">Lista de dividendos</p>
+                    <div className="card wallet__tables-cards">
+                        <Table
+                            head={headDividend}
+                            body={input.dividends}
+                            hasDel={false}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="wallet__tables">
+                <div>
+                    <p className="wallet__tables-titles">Aportes</p>
+                    <div className="card wallet__tables-cards">
+                        <Table
+                            head={headAporst}
+                            body={input.aports}
+                            hasDel={false}
+                            hasView={true}
+                        />
+                    </div>
+                    <div className="wallet__tables-cards-total">
+                        <strong>Total</strong>
+                        <strong>{total.currency('brl')}</strong>
+                    </div>
+                </div>
+                <div>
+                    <p className="wallet__tables-titles">Patrimônio x Ganho</p>
+                    <div className="card wallet__tables-cards">
+                        <Table
+                            head={headPatrimony}
+                            body={input.patrimony}
+                            hasDel={false}
+                        />
+                    </div>
                 </div>
             </div>
 
             <div className="wallet__charts">
-                <span className="wallet__charts-wrapper">
-                    <p>Aportes no ano</p>
-                    <div className="card wallet__charts-apports">
-                        <Bars content={input.aports} />
-                    </div>
-                </span>
-
-                <span className="wallet__charts-wrapper">
-                    <p>Dividendos no ano</p>
-                    <div className="card wallet__charts-dividends">
-                        <Bars content={dataMock} />
-                    </div>
-                </span>
+                <p>Variação da ultima compra</p>
+                <div className="card wallet__charts-dividends">
+                    <Table
+                        head={headVariations}
+                        body={input.variations}
+                        hasDel={false}
+                    />
+                </div>
+            </div>
+            <div className="wallet__charts" style={{ marginTop: '70px' }}>
+                <p>Comparação dividendos ano</p>
+                <div className="card wallet__charts-dividends">
+                    <Bars content={input.dataGraph} />
+                </div>
             </div>
         </section>
     )

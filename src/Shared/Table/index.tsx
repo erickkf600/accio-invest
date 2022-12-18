@@ -7,7 +7,9 @@ interface input {
     head: TableContent[]
     body: any[]
     hasDel: boolean
+    hasView?: boolean
     removeSession?: any
+    abriModal?: any
 }
 const Table: React.FC<input> = input => {
     const { setConfirmModal } = useConfirmBoxContext()
@@ -20,6 +22,7 @@ const Table: React.FC<input> = input => {
                             <th key={i}>{el.name}</th>
                         ))}
                         {input.hasDel && <th>Remover</th>}
+                        {input.hasView && <th>Ver</th>}
                     </tr>
                 </thead>
                 <tbody className="table__body">
@@ -42,6 +45,14 @@ const Table: React.FC<input> = input => {
                                     ></button>
                                 </td>
                             )}
+                            {input.hasView && (
+                                <td className="delete-section">
+                                    <button
+                                        className="icon-trash-2 delete"
+                                        onClick={() => input.abriModal(index)}
+                                    ></button>
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
@@ -49,7 +60,7 @@ const Table: React.FC<input> = input => {
 
             {/* input.removeSession(i) */}
 
-            <ul className="table-mobile">
+            {/* <ul className="table-mobile">
                 <li>
                     <div className="table-mobile__head">
                         <p>Nome compra</p>
@@ -70,7 +81,7 @@ const Table: React.FC<input> = input => {
                         <button className="icon-trash-2 delete"></button>
                     </div>
                 </li>
-            </ul>
+            </ul> */}
         </>
     )
 }

@@ -3,9 +3,45 @@ import Table from './../../Shared/Table2'
 const Template: React.FC<any> = input => {
     return (
         <section className="movimentacoes">
-            {input.content.length ? (
-                <div className="card movimentacoes__card">
-                    <div className="card__padding">
+            <small>
+                BUG: pesquisar /10 e filtrar por dividendos - selecionar o
+                ultimo
+            </small>
+            <div className="card movimentacoes__card">
+                <div className="card__padding">
+                    <div className="movimentacoes__card-filter">
+                        <span>
+                            <input
+                                type="text"
+                                placeholder="Pesquisar..."
+                                className="searchinput"
+                                onChange={(e: any) => input.search(e)}
+                            />
+                        </span>
+                        <span className="movimentacoes__card-filter-select">
+                            <p>Filtrar</p>
+                            <select
+                                className="edit-input"
+                                defaultValue=""
+                                onChange={e => input.setFilter(e.target.value)}
+                                style={{
+                                    width: '88px',
+                                    marginLeft: '-9px',
+                                }}
+                            >
+                                <option value="" selected disabled>
+                                    selecione
+                                </option>
+                                <option value="all">todos</option>
+                                {input.filters.map((items: any, i: number) => (
+                                    <option value={items.type} key={i}>
+                                        {items.text}
+                                    </option>
+                                ))}
+                            </select>
+                        </span>
+                    </div>
+                    {input.content.length ? (
                         <form>
                             <Table
                                 paginate={{
@@ -72,11 +108,13 @@ const Template: React.FC<any> = input => {
                                 ))}
                             </Table>
                         </form>
-                    </div>
+                    ) : (
+                        <h1 style={{ marginTop: '20px', textAlign: 'center' }}>
+                            sem dados
+                        </h1>
+                    )}
                 </div>
-            ) : (
-                <h1>sem dados</h1>
-            )}
+            </div>
         </section>
     )
 }

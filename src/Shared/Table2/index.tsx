@@ -26,7 +26,9 @@ const Table: React.FC<input> = input => {
         const limit = input?.paginate?.itemsPerPage || 1
         const calc = total / (limit || 1)
         const division = total % (limit || 1) == 1 ? calc : calc + 1
-        return total <= 5 ? 1 : Math.trunc(division)
+        return total <= 5
+            ? 1
+            : Math.trunc(division) + (input?.paginate?.totalItems === 6 ? 1 : 0)
     }
     const handleClick = (el: any) => {
         if (el.target.parentElement.tagName === 'TR') {

@@ -49,7 +49,7 @@ const Template: React.FC<any> = ({ month, head, data }: any) => {
                 </div>
 
                 <div className="home__infos-next-payments">
-                    <strong>Próximos pagamentos</strong>
+                    <strong>Stores</strong>
                     <Table head={head} body={data} hasDel={false} />
                 </div>
             </div>

@@ -69,19 +69,7 @@ export const getMovementsList = (
 ): Promise<any> => {
     return new Promise((resolve, reject) => {
         axiosInstance
-            .get(`moviments/${year}/${page}/${limit}`)
-            .then((value: AxiosResponse) => {
-                resolve(value.data)
-            })
-            .catch(err => {
-                reject(err)
-            })
-    })
-}
-export const getHistoryApport = (year: number): Promise<any> => {
-    return new Promise((resolve, reject) => {
-        axiosInstance
-            .get(`wallet/hostory-aports/${year}`)
+            .get(`moviments/list/${page}/${limit}`)
             .then((value: AxiosResponse) => {
                 resolve(value.data)
             })
@@ -94,6 +82,66 @@ export const getAssetsList = (): Promise<any> => {
     return new Promise((resolve, reject) => {
         axiosInstance
             .get(`wallet/assets-list`)
+            .then((value: AxiosResponse) => {
+                resolve(value.data)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const getDividendsList = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        axiosInstance
+            .get(`wallet/dividends-list`)
+            .then((value: AxiosResponse) => {
+                resolve(value.data)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const getAportsList = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        axiosInstance
+            .get(`wallet/history-aports`)
+            .then((value: AxiosResponse) => {
+                resolve(value.data)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const getPatrimonyList = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        axiosInstance
+            .get(`wallet/patrimony-gain`)
+            .then((value: AxiosResponse) => {
+                resolve(value.data)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const getVariatonsList = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        axiosInstance
+            .get(`wallet/variations`)
+            .then((value: AxiosResponse) => {
+                resolve(value.data)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const getDividensGraph = (year: number): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        axiosInstance
+            .get(`wallet/dividends-graph/${year}`)
             .then((value: AxiosResponse) => {
                 resolve(value.data)
             })

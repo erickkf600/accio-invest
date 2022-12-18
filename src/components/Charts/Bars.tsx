@@ -18,18 +18,10 @@ const Bars: FC<any> = input => {
         Tooltip,
     )
     const monthLabel = months.map((el: any) => el.title)
-    const dataTrated = () => {
-        return input.content.map((el: any) => {
-            const monthIndex = el.data.split('/')[1] - 1
-            return Object.assign(el, {
-                NovoValor: el.valor == 0 ? 0.02 : Math.abs(el.valor),
-                label: monthLabel[monthIndex],
-                ano: el.data.split('/').at(-1),
-            })
-        })
-    }
     const labelsTooltip = (tooltipItems: any) => {
-        return `${tooltipItems.raw.valor.currency('brl')}`
+        return `${tooltipItems.raw.ano} - ${tooltipItems.raw.valor.currency(
+            'brl',
+        )}`
     }
     const options = {
         maintainAspectRatio: false,
@@ -40,14 +32,14 @@ const Bars: FC<any> = input => {
             tooltip: {
                 displayColors: false,
                 callbacks: {
-                    title: () => 'Índice',
+                    title: () => '',
                     label: labelsTooltip,
                 },
             },
         },
         parsing: {
             xAxisKey: 'label',
-            yAxisKey: 'NovoValor',
+            yAxisKey: 'valor',
         },
         scales: {
             y: {
@@ -73,17 +65,22 @@ const Bars: FC<any> = input => {
 
     const data: any = {
         labels: monthLabel,
-        datasets: [
-            {
-                data: dataTrated(),
-                backgroundColor: input.content.map((el: any) => {
-                    return el.valor < 0 ? '#663333' : '#B4BECC'
-                }),
-                // barPercentage: 0.5,
+        datasets: input.content.map((dt: any, i: number) => {
+            return {
+                data: dt,
+                barPercentage: i === 0 ? 0.8 : 0.9,
+                backgroundColor:
+                    i === 0
+                        ? dt.map((el: any) => {
+                              return el.valor < 0 ? '#663333' : '#B4BECC'
+                          })
+                        : dt.map((el: any) => {
+                              return el.valor < 0 ? '#f000' : '#2b2b2b'
+                          }),
                 datalabels: {
                     anchor: 'end',
                     align: 'start',
-                    opacity: 0.7,
+                    opacity: i === 0 ? 0.4 : 0.7,
                     color: '#fff',
                     padding: {
                         top: 8,
@@ -91,38 +88,9 @@ const Bars: FC<any> = input => {
                     font: {
                         weight: 'bold',
                     },
-                    formatter: (val: any) => {
-                        return Math.abs(val.NovoValor) < 0.1
-                            ? null
-                            : `${val.valor.currency('brl')}`
-                    },
                 },
-            },
-            // {
-            //     data: dataTrated(),
-            //     backgroundColor: input.content.map((el: any) => {
-            //         return el.valor < 0 ? '#f000' : '#00f'
-            //     }),
-            //     // barPercentage: 0.5,
-            //     datalabels: {
-            //         anchor: 'end',
-            //         align: 'start',
-            //         opacity: 0.7,
-            //         color: '#fff',
-            //         padding: {
-            //             top: 8,
-            //         },
-            //         font: {
-            //             weight: 'bold',
-            //         },
-            //         formatter: (val: any) => {
-            //             return Math.abs(val.NovoValor) < 0.1
-            //                 ? null
-            //                 : `${val.valor}%`
-            //         },
-            //     },
-            // },
-        ],
+            }
+        }),
     }
     return <Bar options={options} data={data} />
 }
