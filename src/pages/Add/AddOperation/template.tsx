@@ -27,7 +27,7 @@ const Template: React.FC<any> = input => {
                             />
                             <TextField
                                 id="filled-basic"
-                                label="Data da compra"
+                                label="Data da operação"
                                 defaultValue={input.content?.date_operation}
                                 inputProps={{
                                     'data-mask': '00/00/0000',
@@ -48,7 +48,12 @@ const Template: React.FC<any> = input => {
                                         select
                                         label="Operação"
                                         variant="filled"
-                                        defaultValue=""
+                                        defaultValue={
+                                            !!input.content
+                                                ? input.content.type_operation
+                                                      .id
+                                                : ''
+                                        }
                                         error={
                                             !!input.errors?.operation?.[index]
                                                 ?.type_operation
@@ -69,7 +74,11 @@ const Template: React.FC<any> = input => {
                                         select
                                         variant="filled"
                                         label="Tipo"
-                                        defaultValue=""
+                                        defaultValue={
+                                            !!input.content
+                                                ? input.content.type.id
+                                                : ''
+                                        }
                                         error={
                                             !!input.errors?.operation?.[index]
                                                 ?.type

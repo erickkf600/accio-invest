@@ -8,22 +8,9 @@
     background: #fff;
     padding: 30px 15px 18px;
     border-radius: $radius5;
-    width: 215px;
-    max-width: 300px;
+    width: 450px;
+    max-width: 600px;
     position: relative;
-    &:before {
-        content: '';
-        position: absolute;
-        top: -35px;
-        left: 0;
-        right: 0;
-        display: flex;
-        margin: auto;
-        width: 70px;
-        height: 70px;
-        background: $white;
-        border-radius: $radius100;
-    }
 
     &__icon {
         position: absolute;

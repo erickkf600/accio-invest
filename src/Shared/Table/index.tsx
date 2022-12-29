@@ -12,7 +12,6 @@ interface input {
     abriModal?: any
 }
 const Table: React.FC<input> = input => {
-    const { setConfirmModal } = useConfirmBoxContext()
     return (
         <>
             <table className="table">
@@ -31,7 +30,9 @@ const Table: React.FC<input> = input => {
                             {input.head.map((h: TableContent, ii: number) => (
                                 <td key={ii}>
                                     {h?.currency
-                                        ? el[h.key].currency('brl')
+                                        ? typeof el[h.key] === 'number'
+                                            ? el[h.key].currency('brl')
+                                            : 'R$' + el[h.key]
                                         : el[h.key]}
                                 </td>
                             ))}
@@ -48,7 +49,7 @@ const Table: React.FC<input> = input => {
                             {input.hasView && (
                                 <td className="delete-section">
                                     <button
-                                        className="icon-trash-2 delete"
+                                        className="icon-eye delete"
                                         onClick={() => input.abriModal(index)}
                                     ></button>
                                 </td>

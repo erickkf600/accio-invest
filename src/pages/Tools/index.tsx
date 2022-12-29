@@ -1,11 +1,9 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import BancoDados from './BancoDados'
 import Calculadoras from './Calculadoras'
-import Cotacoes from './Cotacoes'
+import Dados from './Dados'
 import Estimativas from './Estimativas'
 import SideBar from './sideBar'
-import TodoList from './TodoList'
 import './tools.scss'
 const Tools: React.FC = () => {
     return (
@@ -16,18 +14,18 @@ const Tools: React.FC = () => {
                     <Route exact path="/ferramentas/calculadoras">
                         <Calculadoras />
                     </Route>
-                    <Route exact path="/ferramentas/cotacoes">
-                        <Cotacoes />
-                    </Route>
                     <Route exact path="/ferramentas/estimativas">
                         <Estimativas />
                     </Route>
-                    <Route exact path="/ferramentas/banco-dados">
-                        <BancoDados />
+                    <Route exact path="/ferramentas/dados">
+                        <Dados />
                     </Route>
-                    <Route exact path="/ferramentas/todo-list">
+                    {/* <Route exact path="/ferramentas/cotacoes">
+                        <Cotacoes />
+                    </Route> */}
+                    {/* <Route exact path="/ferramentas/todo-list">
                         <TodoList />
-                    </Route>
+                    </Route> */}
                     <Redirect
                         from="/ferramentas"
                         to="ferramentas/calculadoras"

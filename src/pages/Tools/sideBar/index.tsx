@@ -15,15 +15,15 @@ const SideBar: React.FC = () => {
                 <NavLink to="/ferramentas/estimativas" activeClassName="active">
                     Estimativas
                 </NavLink>
-                <NavLink to="/ferramentas/cotacoes" activeClassName="active">
+                <NavLink to="/ferramentas/dados" activeClassName="active">
+                    Dados
+                </NavLink>
+                {/* <NavLink to="/ferramentas/cotacoes" activeClassName="active">
                     Cotações
-                </NavLink>
-                <NavLink to="/ferramentas/todo-list" activeClassName="active">
+                </NavLink> */}
+                {/* <NavLink to="/ferramentas/todo-list" activeClassName="active">
                     Todo List
-                </NavLink>
-                <NavLink to="/ferramentas/banco-dados" activeClassName="active">
-                    Banco de Dados
-                </NavLink>
+                </NavLink> */}
             </nav>
         </section>
     )

@@ -6,7 +6,7 @@ export const head: TableContent[] = [
         key: 'cod',
     },
     {
-        name: 'Tipo',
+        name: 'Tp',
         key: 'type',
     },
     {
@@ -14,13 +14,13 @@ export const head: TableContent[] = [
         key: 'qtd',
     },
     {
-        name: 'Prc. Atual',
-        key: 'curr_price',
+        name: 'DV. Pg',
+        key: 'payed_dividend',
         currency: true,
     },
     {
-        name: 'DVs. Pd',
-        key: 'payed_dividend',
+        name: 'Tot.',
+        key: 'total',
         currency: true,
     },
 ]
@@ -54,8 +54,13 @@ export const headDividend: TableContent[] = [
 ]
 export const headAporst: TableContent[] = [
     {
-        name: 'Valor',
+        name: 'S. total',
         key: 'value',
+        currency: true,
+    },
+    {
+        name: 'Taxas',
+        key: 'fees',
         currency: true,
     },
     {
@@ -63,8 +68,9 @@ export const headAporst: TableContent[] = [
         key: 'month',
     },
     {
-        name: 'Ano',
-        key: 'year',
+        name: 'Total',
+        key: 'total_fees',
+        currency: true,
     },
 ]
 export const headPatrimony: TableContent[] = [
@@ -102,7 +108,12 @@ export const headVariations: TableContent[] = [
         key: 'type',
     },
     {
-        name: 'Pr. At',
+        name: 'Val. Comp(un)',
+        key: 'purchase_price',
+        currency: true,
+    },
+    {
+        name: 'Val. At(un)',
         key: 'curr_price',
         currency: true,
     },
@@ -112,7 +123,7 @@ export const headVariations: TableContent[] = [
         currency: true,
     },
     {
-        name: 'Prc. At',
+        name: 'Tot. At',
         key: 'current_total',
         currency: true,
     },

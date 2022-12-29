@@ -1,16 +1,12 @@
 import React from 'react'
+import ModalHead from '../../components/ModalHead'
 import './mensage-box.scss'
 
 const MensageBox: React.FC<any> = input => {
     return (
         <>
             <div className="msg-box">
-                {input.icon && (
-                    <span className={'msg-box__icon icon-' + input.icon}></span>
-                )}
-                <p className="msg-box__title">{input.title}</p>
-                <p className="msg-box__text">{input.text}</p>
-
+                <ModalHead title={input.title} text={input.text} />
                 <div className="msg-box__actions">
                     {input.secondaryButton && (
                         <button

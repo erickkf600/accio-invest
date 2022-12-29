@@ -1,9 +1,13 @@
 import React from 'react'
-const Template: React.FC = () => {
+import LiberdadeFinanceira from './LiberdadeFinanceira'
+import Porcentagens from './Porcentagens'
+
+const Template: React.FC<any> = (input: any) => {
     return (
-        <section>
-            <h1>Calculadoras</h1>
-        </section>
+        <>
+            <Porcentagens {...input} />
+            <LiberdadeFinanceira {...input} />
+        </>
     )
 }
 

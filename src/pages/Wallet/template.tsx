@@ -13,14 +13,18 @@ const Template: React.FC<any> = input => {
     const [total, setTotal] = useState(0)
     useEffect(() => {
         setTotal(
-            input.aports.reduce((acc: any, { value }: any) => acc + value, 0),
+            input.aports.reduce(
+                (acc: any, { total_fees }: any) => acc + total_fees,
+                0,
+            ),
         )
     }, [input.aports])
+
     return (
         <section className="wallet">
             <h1>Minha Carteira</h1>
 
-            <div className="wallet__tables">
+            <div className="wallet__tables table-scroll">
                 <div>
                     <p className="wallet__tables-titles">Ativos</p>
                     <div className="card wallet__tables-cards">
@@ -38,7 +42,7 @@ const Template: React.FC<any> = input => {
                     </div>
                 </div>
             </div>
-            <div className="wallet__tables">
+            <div className="wallet__tables table-scroll">
                 <div>
                     <p className="wallet__tables-titles">Aportes</p>
                     <div className="card wallet__tables-cards">
@@ -47,6 +51,7 @@ const Template: React.FC<any> = input => {
                             body={input.aports}
                             hasDel={false}
                             hasView={true}
+                            abriModal={input.openModal}
                         />
                     </div>
                     <div className="wallet__tables-cards-total">
@@ -54,7 +59,7 @@ const Template: React.FC<any> = input => {
                         <strong>{total.currency('brl')}</strong>
                     </div>
                 </div>
-                <div>
+                <div className="table-scroll">
                     <p className="wallet__tables-titles">Patrimônio x Ganho</p>
                     <div className="card wallet__tables-cards">
                         <Table
@@ -66,7 +71,7 @@ const Template: React.FC<any> = input => {
                 </div>
             </div>
 
-            <div className="wallet__charts">
+            <div className="wallet__charts table-scroll">
                 <p>Variação da ultima compra</p>
                 <div className="card wallet__charts-dividends">
                     <Table

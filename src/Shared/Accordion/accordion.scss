@@ -1,0 +1,32 @@
+.accordion{
+    &__grid-card{
+        width: calc(100% - 30px) !important;
+        padding: 15px;
+        &-title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            cursor: pointer;
+        }
+        &-button{
+            font-size: 25px;
+            font-weight: 400;
+            text-align: left;
+            border-bottom: none;
+        }
+
+        .arrow{
+            transform: rotate(0deg);
+            transition: all 0.3s;
+            height: 16px;
+        }
+        .opened{
+            transform: rotate(180deg);
+        }
+    }
+
+    &__content{
+        margin-top: 15px;
+    }
+}

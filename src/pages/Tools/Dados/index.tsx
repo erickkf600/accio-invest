@@ -1,8 +1,8 @@
 import React from 'react'
 import Template from './template'
-import './db.scss'
-const BancoDados: React.FC = () => {
+import './dados.scss'
+const Dados: React.FC = () => {
     return <Template />
 }
 
-export default BancoDados
+export default Dados

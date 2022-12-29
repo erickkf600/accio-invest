@@ -3,10 +3,6 @@ import Table from './../../Shared/Table2'
 const Template: React.FC<any> = input => {
     return (
         <section className="movimentacoes">
-            <small>
-                BUG: pesquisar /10 e filtrar por dividendos - selecionar o
-                ultimo
-            </small>
             <div className="card movimentacoes__card">
                 <div className="card__padding">
                     <div className="movimentacoes__card-filter">
@@ -93,7 +89,7 @@ const Template: React.FC<any> = input => {
                                                 type="button"
                                                 className="icon-edit"
                                                 onClick={() =>
-                                                    input.setIsEdit(i)
+                                                    input.setIsEdit(res)
                                                 }
                                             ></button>
                                             <button

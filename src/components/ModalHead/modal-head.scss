@@ -1,0 +1,21 @@
+@import './../../styles/utils/mixins';
+@import './../../styles/utils/variables';
+
+.modal-head{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    &__texts{
+        h1{
+            margin-bottom: 15px;
+            font: {
+                size: 20px;
+            }
+        }
+    }
+    button{
+        font-size: 20px;
+        position: relative;
+        // top: -8px;
+    }
+}

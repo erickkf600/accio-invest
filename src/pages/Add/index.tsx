@@ -40,8 +40,8 @@ const Movimentacoes: React.FC = () => {
             })
     }
 
-    const setEdit = (index: number) => {
-        setEditiContent(content[index])
+    const setEdit = (item: any) => {
+        setEditiContent(item)
         toggleAdd(!add)
     }
 
@@ -67,10 +67,9 @@ const Movimentacoes: React.FC = () => {
                     <MensageBox
                         onClose={(e: any) => setDelete(e, onClose, id)}
                         title="Tem certeza?"
-                        text="Esta ação é irreversível"
+                        text="Após realizar esta ação, não será mais possível recuperar"
                         secondaryButton="Não"
                         primaryButton="Sim"
-                        icon="help"
                     />
                 )
             },
@@ -80,7 +79,7 @@ const Movimentacoes: React.FC = () => {
     const showObs = (text: string) => {
         confirmAlert({
             customUI: () => {
-                return <MensageBox text={text} />
+                return <MensageBox title="Observações" text={text} />
             },
         })
     }
@@ -142,7 +141,7 @@ const Movimentacoes: React.FC = () => {
                     total={total}
                     changePage={(e: number) => setPage(e)}
                     changeLimit={(e: number) => setLimit(e)}
-                    setIsEdit={(e: number) => setEdit(e)}
+                    setIsEdit={(e: any) => setEdit(e)}
                     deleteMov={(id: number) => deleteMov(id)}
                     showObs={(text: string) => showObs(text)}
                     filters={filters}

@@ -62,6 +62,19 @@ export const getUsers = (): Promise<Users> => {
     })
 }
 
+export const getResume = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        axiosInstance
+            .get(`home/resume`)
+            .then((value: AxiosResponse) => {
+                resolve(value.data)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+
 export const getMovementsList = (
     year: number,
     limit: number,

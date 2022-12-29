@@ -35,15 +35,6 @@
                 align-items: flex-end;
             }
         }
-        ::-webkit-scrollbar {
-            width: 2px;
-          }
-        ::-webkit-scrollbar-track {
-            box-shadow: none;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: $blue-light;
-        }
     }
     &__charts{
         margin-top: 40px;
@@ -59,6 +50,43 @@
             height: 100%;
             padding: 20px 15px 15px;
             margin-top: 15px;
+        }
+
+        &-dividends{
+            overflow-y: auto;
+        }
+    }
+}
+
+.items-list{
+    padding: 20px;
+    width: 550px;
+    ul{
+        li{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &:nth-child(odd){
+                background: #ebebeb;
+            }
+            span{
+                display: flex;
+                align-items: center;
+                column-gap: 15px;
+            }
+            p{
+                padding: 7px;
+                font: {
+                    size: 14px
+                }
+                &:last-child{
+                    font-weight: 700;
+                }
+            }
+            small{
+                font-size: 12px;
+
+            }
         }
     }
 }

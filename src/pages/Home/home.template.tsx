@@ -1,29 +1,27 @@
 import React from 'react'
 import Bars from '../../components/Charts/Bars'
 import Doughnuts from '../../components/Charts/Doughnuts'
-import { dataMock } from '../../mocks/data.mock'
-import Table from '../../Shared/Table'
-const Template: React.FC<any> = ({ month, head, data }: any) => {
+const Template: React.FC<any> = (input: any) => {
     return (
         <section className="home">
             <div className="home__grid">
                 <div className="card home__grid-card">
                     <strong>Total Investido</strong>
-                    <p>R$ 15.000,00</p>
+                    <p>{input.response?.resume?.total.currency('brl')}</p>
                 </div>
                 <div className="card home__grid-card">
-                    <strong>
-                        Aporte em {month?.full_name?.captalizeCase()}
-                    </strong>
-                    <p>R$ 15.000,00</p>
+                    <strong>Último Aporte</strong>
+                    <p>{input.response?.resume?.last.currency('brl')}</p>
                 </div>
                 <div className="card home__grid-card">
-                    <strong>Dividendos do mês</strong>
-                    <p>R$ 10,20</p>
+                    <strong>Último pagamento</strong>
+                    <p>
+                        {input.response?.resume?.last_dividend.currency('brl')}
+                    </p>
                 </div>
                 <div className="card home__grid-card">
                     <strong>Patrimônio</strong>
-                    <p>R$ 200,00</p>
+                    <p>{input.response?.resume?.patrimony.currency('brl')}</p>
                 </div>
             </div>
 
@@ -34,23 +32,37 @@ const Template: React.FC<any> = ({ month, head, data }: any) => {
                         <div className="chart">
                             <div className="home__chart-doughnut-size">
                                 <Doughnuts
-                                    content={[12, 19, 50]}
-                                    labels={['FIIs', 'Ações', 'Renda Fixa']}
-                                    colors={['#00A7D7', '#1BAA9C', '#3E1191']}
+                                    content={input.doughnutContent}
+                                    labels={input.doughnutLabel}
+                                    colors={input.doughnutColor}
                                 />
                             </div>
                             <div className="home__chart-doughnut-labels">
-                                <p>FIIs</p>
-                                <p>Ações</p>
-                                <p>Renda Fixa</p>
+                                {input.doughnutLabel.map(
+                                    (res: string, i: number) => (
+                                        <p key={i}>{res}</p>
+                                    ),
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div className="home__infos-next-payments">
-                    <strong>Stores</strong>
-                    <Table head={head} body={data} hasDel={false} />
+                <div className="home__chart">
+                    <div className="card home__chart-doughnut">
+                        <strong>Distribuição - Renda Variável</strong>
+                        <div
+                            className="chart"
+                            style={{ justifyContent: 'center' }}
+                        >
+                            <div className="home__chart-doughnut-size">
+                                <Doughnuts
+                                    content={input.distContent}
+                                    labels={input.distLabel}
+                                    colors={input.distColor}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -58,7 +70,7 @@ const Template: React.FC<any> = ({ month, head, data }: any) => {
                 <h1 style={{ margin: '100px 0 0' }}>Aportes</h1>
                 <div className="home__chart">
                     <div className="card home__chart-bars">
-                        <Bars content={dataMock} />
+                        <Bars content={input.aports} />
                     </div>
                 </div>
             </div>

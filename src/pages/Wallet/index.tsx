@@ -10,6 +10,7 @@ import {
     getDividensGraph,
 } from '../../service/http/app.get'
 import { useSessionStorage } from '../../components/SelectMounth/toggle.provider'
+import Modal from './modal.template'
 const Wallet: React.FC = () => {
     const { selected } = useSessionStorage()
     const [aports, setAports] = useState<any>([])
@@ -18,6 +19,8 @@ const Wallet: React.FC = () => {
     const [patrimony, setPatrimony] = useState<any>([])
     const [variations, setVariations] = useState<any>([])
     const [dataGraph, setDataGraph] = useState<any>([])
+    const [open, setOpen] = useState(false)
+    const [itemsList, setItem] = useState([])
 
     useEffect(() => {
         getAssets()
@@ -83,15 +86,26 @@ const Wallet: React.FC = () => {
                 console.error(err)
             })
     }
+    const openModal = (index: number) => {
+        setOpen(true)
+        setItem(aports[index]?.items)
+    }
+    const handleClose = () => {
+        setOpen(false)
+    }
     return (
-        <Template
-            aports={aports}
-            assets={assets}
-            dividends={dividends}
-            patrimony={patrimony}
-            variations={variations}
-            dataGraph={dataGraph}
-        />
+        <>
+            <Template
+                aports={aports}
+                assets={assets}
+                dividends={dividends}
+                patrimony={patrimony}
+                variations={variations}
+                dataGraph={dataGraph}
+                openModal={openModal}
+            />
+            <Modal open={open} setClose={handleClose} itemsList={itemsList} />
+        </>
     )
 }
 
