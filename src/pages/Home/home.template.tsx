@@ -7,21 +7,29 @@ const Template: React.FC<any> = (input: any) => {
             <div className="home__grid">
                 <div className="card home__grid-card">
                     <strong>Total Investido</strong>
-                    <p>{input.response?.resume?.total.currency('brl')}</p>
+                    <p>
+                        {(input.response?.resume?.total || 0).currency('brl')}
+                    </p>
                 </div>
                 <div className="card home__grid-card">
                     <strong>Último Aporte</strong>
-                    <p>{input.response?.resume?.last.currency('brl')}</p>
+                    <p>{(input.response?.resume?.last || 0).currency('brl')}</p>
                 </div>
                 <div className="card home__grid-card">
                     <strong>Último pagamento</strong>
                     <p>
-                        {input.response?.resume?.last_dividend.currency('brl')}
+                        {(input.response?.resume?.last_dividend || 0).currency(
+                            'brl',
+                        )}
                     </p>
                 </div>
                 <div className="card home__grid-card">
                     <strong>Patrimônio</strong>
-                    <p>{input.response?.resume?.patrimony.currency('brl')}</p>
+                    <p>
+                        {(input.response?.resume?.patrimony || 0).currency(
+                            'brl',
+                        )}
+                    </p>
                 </div>
             </div>
 

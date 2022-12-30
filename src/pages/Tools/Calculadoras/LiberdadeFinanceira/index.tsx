@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Accordion from '../../../../Shared/Accordion'
 import { formSimulators } from './../forms.mock'
+import { NumericFormat } from 'react-number-format'
 
 const LiberdadeFinanceira: React.FC<any> = (input: any) => {
+    const [type, setType] = useState<any>(0)
     return (
         <section className="calcs">
             <Accordion
@@ -10,51 +12,78 @@ const LiberdadeFinanceira: React.FC<any> = (input: any) => {
                 toggle={input.openTwo}
                 setToggle={() => input.setOpenTwo(!input.openTwo)}
             >
-                <div className="calcs__card">
-                    {formSimulators.map((form, i: number) => (
-                        <div className="calcs__card-inputs" key={i}>
-                            <h3>{form.title}</h3>
-                            <form
-                                className="calcs__card-inputs-item"
-                                onSubmit={(e: any) =>
-                                    input.calc({
-                                        event: e,
-                                        type: form.type,
-                                    })
-                                }
-                            >
-                                <div className="calcs__card-inputs-item-content">
-                                    <span className="form-control">
-                                        <label>{form.label1}</label>
-                                        <input
-                                            type="number"
-                                            className="edit-input"
-                                            name="percent"
-                                            placeholder="0"
-                                        />
-                                    </span>
-                                    <span className="form-control">
-                                        <label>{form.label2}</label>
-                                        <input
-                                            type="number"
-                                            className="edit-input"
-                                            name="value"
-                                            placeholder="0"
-                                        />
-                                    </span>
-                                </div>
+                <div className="calcs__content">
+                    <div className="calcs__content-form">
+                        <select
+                            className="edit-input"
+                            defaultValue=""
+                            onChange={(e: any) => setType(e.target.value)}
+                            style={{
+                                width: '88px',
+                                marginLeft: '-9px',
+                                top: '-40px',
+                            }}
+                        >
+                            {formSimulators.map((form, i: number) => (
+                                <option
+                                    key={i}
+                                    value={i}
+                                    selected={i === 0}
+                                    defaultValue=""
+                                >
+                                    {form.title}
+                                </option>
+                            ))}
+                        </select>
+                        <form
+                            onSubmit={(e: any) =>
+                                input.calcFinacial({
+                                    event: e,
+                                    type: formSimulators[type].type,
+                                })
+                            }
+                        >
+                            <div className="calcs__content-form-inputs calcs__content-form-inputs--type-two">
+                                {formSimulators[type].inputs.map(
+                                    (inp: any, i: number) => (
+                                        <span className="form-control" key={i}>
+                                            <label>{inp.label}</label>
 
-                                <div className="calcs__card-inputs-item-footer">
-                                    <p className="calcs__card-inputs-result">
-                                        Resultado: {input[form.result]}
-                                    </p>
-                                    <button type="submit" className="btn">
-                                        calcular
-                                    </button>
-                                </div>
-                            </form>
+                                            <NumericFormat
+                                                type={inp.type}
+                                                className="edit-input"
+                                                defaultValue=""
+                                                name={inp.name}
+                                                thousandSeparator={'.'}
+                                                decimalSeparator={','}
+                                                onValueChange={(
+                                                    values,
+                                                    sourceInfo,
+                                                ) => {
+                                                    ;(
+                                                        sourceInfo.event as any
+                                                    ).target.setAttribute(
+                                                        'floatValue',
+                                                        values.floatValue,
+                                                    )
+                                                }}
+                                            />
+                                        </span>
+                                    ),
+                                )}
+                            </div>
+                            <button type="submit" className="btn">
+                                calcular
+                            </button>
+                        </form>
+                        <div className="divider-v"></div>
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                        <div className="calcs__content-total-card">
+                            <p>Resultado:</p>
+                            <strong>{input.finalcialResult}</strong>
                         </div>
-                    ))}
+                    </div>
                 </div>
             </Accordion>
         </section>

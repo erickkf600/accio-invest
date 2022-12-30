@@ -1,10 +1,6 @@
 import React from 'react'
 const Template: React.FC = () => {
-    return (
-        <section>
-            <h1>Kanban</h1>
-        </section>
-    )
+    return <section></section>
 }
 
 export default Template

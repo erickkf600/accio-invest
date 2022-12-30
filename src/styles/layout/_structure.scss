@@ -102,6 +102,9 @@ dl {
         overflow-x: hidden;
         white-space: nowrap;
         @include respond-to('medium') {
+            width: 241px;
+        }
+        @include respond-to('extra-large') {
             width: $opened;
         }
     }

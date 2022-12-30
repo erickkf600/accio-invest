@@ -48,7 +48,7 @@ const Movimentacoes: React.FC = () => {
     const setDelete = async (e: any, close: any, id: number) => {
         if (e) {
             deleteMovimentation(id)
-                .then(_ => {
+                .then(() => {
                     toast.success('Deletado com sucesso')
                     close()
                 })

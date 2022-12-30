@@ -1,0 +1,8 @@
+@import './../../styles/utils/mixins';
+
+.tools-content{
+    margin-left: 230px;
+    @include respond-to('extra-large') {
+        margin-left: 300px;
+    }
+}

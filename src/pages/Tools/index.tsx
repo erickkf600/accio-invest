@@ -9,7 +9,7 @@ const Tools: React.FC = () => {
     return (
         <div>
             <SideBar />
-            <div style={{ marginLeft: '300px' }}>
+            <div className="tools-content">
                 <Switch>
                     <Route exact path="/ferramentas/calculadoras">
                         <Calculadoras />

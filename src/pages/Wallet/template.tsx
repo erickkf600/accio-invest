@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Bars from '../../components/Charts/Bars'
-import { dataMock } from '../../mocks/data.mock'
 import Table from '../../Shared/Table'
 import {
     head,
@@ -19,7 +18,6 @@ const Template: React.FC<any> = input => {
             ),
         )
     }, [input.aports])
-
     return (
         <section className="wallet">
             <h1>Minha Carteira</h1>

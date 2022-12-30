@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { TableContent } from '../../interfaces/table.interface'
+import { getResume } from '../../service/http/app.get'
 import './home.scss'
 import Template from './home.template'
-import { toast } from 'react-toastify'
-import { getResume } from '../../service/http/app.get'
-import { hexGenerator } from '../../utils/consts/hex-generator'
 
 const Home: React.FC<any> = input => {
     const [data, setData] = useState<any>([])
@@ -53,7 +52,6 @@ const Home: React.FC<any> = input => {
     const getResumeData = async () => {
         await getResume()
             .then((res: any) => {
-                console.log(res)
                 setData(res)
                 setDoughnutContent(setValue(res, 'alocations', 'total'))
                 setDoughnutLabel(setValue(res, 'alocations', 'type'))

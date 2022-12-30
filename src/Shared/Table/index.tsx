@@ -1,6 +1,5 @@
 import React from 'react'
 import { TableContent } from '../../interfaces/table.interface'
-import { useConfirmBoxContext } from '../MensageBox/toggle.provider'
 import './table.scss'
 
 interface input {
