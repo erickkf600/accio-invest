@@ -1,6 +1,6 @@
 import React from 'react'
-import SelectMounth from '../SelectMounth'
-import { useToolBox } from '../SelectMounth/toggle.provider'
+import SelectMounth from '../SelectMonth'
+import { useToolBox } from '../SelectMonth/toggle.provider'
 const Template: React.FC = () => {
     const { setShow } = useToolBox()
     return (

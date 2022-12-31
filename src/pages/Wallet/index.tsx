@@ -9,7 +9,7 @@ import {
     getVariatonsList,
     getDividensGraph,
 } from '../../service/http/app.get'
-import { useSessionStorage } from '../../components/SelectMounth/toggle.provider'
+import { useSessionStorage } from '../../components/SelectMonth/toggle.provider'
 import Modal from './modal.template'
 const Wallet: React.FC = () => {
     const { selected } = useSessionStorage()
