@@ -11,6 +11,7 @@ import {
 } from '../../service/http/app.get'
 import { useSessionStorage } from '../../components/SelectMonth/toggle.provider'
 import Modal from './modal.template'
+import { toast } from 'react-toastify'
 const Wallet: React.FC = () => {
     const { selected } = useSessionStorage()
     const [aports, setAports] = useState<any>([])
@@ -38,6 +39,7 @@ const Wallet: React.FC = () => {
             })
             .catch((err: any) => {
                 console.error(err)
+                toast.error(err.message)
             })
     }
 
@@ -68,13 +70,15 @@ const Wallet: React.FC = () => {
                 console.error(err)
             })
     }
+    //todo mensagem de erro
     const getVariatons = () => {
         getVariatonsList()
             .then((res: any) => {
                 setVariations(res)
             })
             .catch((err: any) => {
-                console.error(err)
+                console.log(err)
+                toast.error(err.message)
             })
     }
     const getDataGraph = () => {

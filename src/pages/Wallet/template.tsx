@@ -13,7 +13,7 @@ const Template: React.FC<any> = input => {
     useEffect(() => {
         setTotal(
             input.aports.reduce(
-                (acc: any, { total_fees }: any) => acc + total_fees,
+                (acc: any, { total_fees }: any) => acc + +total_fees,
                 0,
             ),
         )

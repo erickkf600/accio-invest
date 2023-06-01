@@ -147,6 +147,7 @@ export const getVariatonsList = (): Promise<any> => {
                 resolve(value.data)
             })
             .catch(err => {
+                console.log(err)
                 reject(err)
             })
     })

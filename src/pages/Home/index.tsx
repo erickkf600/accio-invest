@@ -52,16 +52,18 @@ const Home: React.FC<any> = input => {
     const getResumeData = async () => {
         await getResume()
             .then((res: any) => {
-                setData(res)
-                setDoughnutContent(setValue(res, 'alocations', 'total'))
-                setDoughnutLabel(setValue(res, 'alocations', 'type'))
-                setDoughnutColor(setValue(res, 'alocations', 'hex'))
+                if (Object.keys(res).length) {
+                    setData(res)
+                    setDoughnutContent(setValue(res, 'alocations', 'total'))
+                    setDoughnutLabel(setValue(res, 'alocations', 'type'))
+                    setDoughnutColor(setValue(res, 'alocations', 'hex'))
 
-                setDistContent(setValue(res, 'distribuition', 'qtd'))
-                setDistLabel(setValue(res, 'distribuition', 'title'))
-                setDistColor(setValue(res, 'distribuition', 'hex'))
+                    setDistContent(setValue(res, 'distribuition', 'qtd'))
+                    setDistLabel(setValue(res, 'distribuition', 'title'))
+                    setDistColor(setValue(res, 'distribuition', 'hex'))
 
-                setAports(res.aports)
+                    setAports(res.aports)
+                }
             })
             .catch(err => {
                 console.error(err)
