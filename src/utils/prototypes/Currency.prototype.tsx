@@ -11,6 +11,7 @@ Number.prototype.currency = function (type: string = 'brl'): string {
     const currencyFormat = new Intl.NumberFormat('id', {
         style: 'currency',
         currency: type.toUpperCase(),
+        maximumFractionDigits: 3,
     }).format(+this)
     return currencyFormat
 }

@@ -120,10 +120,14 @@ const AddOperation: React.FC<any> = input => {
             0,
         )
         return values.map((ell: any) => {
-            const calc = Number(((fees / sum) * ell.total).toFixed(2))
+            const calc = Number(
+                new Intl.NumberFormat('en-US').format((fees / sum) * ell.total),
+            )
             return Object.assign(ell, {
-                fee: Number(((fees / sum) * ell.total).toFixed(2)),
-                total: Number((ell.total + calc).toFixed(2)),
+                fee: calc,
+                total: Number(
+                    new Intl.NumberFormat('en-US').format(ell.total + calc),
+                ),
             })
         })
     }
@@ -132,7 +136,7 @@ const AddOperation: React.FC<any> = input => {
     const patchMovement = async (data: any) => {
         await updateMovement(data, input.content.id)
             // eslint-disable-next-line
-            .then(_ => {
+      .then(_ => {
                 toast.success('Sucesso')
             })
             .catch(err => {
