@@ -1,17 +1,8 @@
 import React from 'react'
-import SelectMounth from '../SelectMonth'
-import { useToolBox } from '../SelectMonth/toggle.provider'
 const Template: React.FC = () => {
-    const { setShow } = useToolBox()
     return (
         <section className="header">
             <div className="header__content">
-                <button
-                    className="icon-calendar header__content-calendar"
-                    onClick={() => setShow(true)}
-                ></button>
-                <SelectMounth />
-
                 <div className="header__content-user">
                     <div className="header__content-user-initials">EF</div>
                     <div className="header__content-user-info">
