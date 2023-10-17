@@ -8,7 +8,6 @@ const Template: React.FC<any> = input => {
     return (
         <section className="add-movements">
             <div className="add-movements__content">
-                <b>falta fazer logica de venda</b>
                 <div className="card">
                     <form className="add-movements__content-form">
                         <div className="add-movements__content-form-user">

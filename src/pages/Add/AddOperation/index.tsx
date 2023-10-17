@@ -82,6 +82,13 @@ const AddOperation: React.FC<any> = input => {
         })
     }
     const cadPurchase = (data: any) => {
+        if (
+            data.operation.length > 1 &&
+            data.operation.findIndex((el: any) => el.type_operation === 2) > -1
+        ) {
+            toast.error('So pode realizar uma venda por vez')
+            return
+        }
         const newValues = data.operation.map((el: any) => {
             return {
                 cod: el.cod,
@@ -100,7 +107,9 @@ const AddOperation: React.FC<any> = input => {
                 )?.title,
             }
         })
-        calcFees(newValues, data.fees)
+        const isSell: boolean = data.operation[0].type_operation === 2
+        calcFees(newValues, data.fees, isSell)
+
         const setValue = [...resumeMovements, ...newValues]
         if (!!input.content) {
             patchMovement(setValue[0])
@@ -114,20 +123,19 @@ const AddOperation: React.FC<any> = input => {
         }
     }
 
-    const calcFees = (values: any, fees: number) => {
+    const calcFees = (values: any, fees: number, sell: boolean) => {
         const sum = values.reduce(
-            (acc: number, { total }: any) => total + acc,
+            (acc: number, { total }: any) => (sell ? total - acc : total + acc),
             0,
         )
         return values.map((ell: any) => {
             const calc = Number(
                 new Intl.NumberFormat('en-US').format((fees / sum) * ell.total),
             )
+            const math = sell ? ell.total - calc : ell.total + calc
             return Object.assign(ell, {
                 fee: calc,
-                total: Number(
-                    new Intl.NumberFormat('en-US').format(ell.total + calc),
-                ),
+                total: Number(new Intl.NumberFormat('en-US').format(math)),
             })
         })
     }
