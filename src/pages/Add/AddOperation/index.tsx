@@ -9,8 +9,10 @@ import { useAssetsTypesContext } from '../../../service/providers/assets.provide
 import { useOperationsTypesContext } from '../../../service/providers/operation_types.provider'
 import { updateMovement } from './../../../service/http/app.patch'
 import { toast } from 'react-toastify'
+import { useQueryClient } from 'react-query'
 
 const AddOperation: React.FC<any> = input => {
+    const client = useQueryClient()
     const { resumeMovements, setMovementsResume } = useResumeMovementsContext()
     const { assetstypes } = useAssetsTypesContext()
     const { operationtypes } = useOperationsTypesContext()
@@ -146,6 +148,7 @@ const AddOperation: React.FC<any> = input => {
             // eslint-disable-next-line
       .then(_ => {
                 toast.success('Sucesso')
+                client.invalidateQueries(['moviments'])
             })
             .catch(err => {
                 console.error(err)

@@ -1,101 +1,48 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import Modal from './modal.template'
+import useWalletQuery from './service/wallet.query'
 import Template from './template'
 import './wallet.scss'
-import {
-    getAssetsList,
-    getDividendsList,
-    getAportsList,
-    getPatrimonyList,
-    getVariatonsList,
-    getDividensGraph,
-} from '../../service/http/app.get'
-import { useSessionStorage } from '../../components/SelectMonth/toggle.provider'
-import Modal from './modal.template'
-import { toast } from 'react-toastify'
+import { Assets } from './interface/assets.interface'
+import { Dividends } from './interface/dividens.interface'
+import { History, ItemsEntity } from './interface/history.interface'
+import { PatrimonyGain } from './interface/patrimonyGain.interface'
+import { Variations } from './interface/variations.interface'
+import { DividendsGrapthEntity } from './interface/dividendsGraph.interface'
 const Wallet: React.FC = () => {
-    const { selected } = useSessionStorage()
-    const [aports, setAports] = useState<any>([])
-    const [assets, setAssets] = useState<any>([])
-    const [dividends, setDividends] = useState<any>([])
-    const [patrimony, setPatrimony] = useState<any>([])
-    const [variations, setVariations] = useState<any>([])
-    const [dataGraph, setDataGraph] = useState<any>([])
+    const walletReq = useWalletQuery(new Date().getFullYear())
+    const [aports, setAports] = useState<History[]>([])
+    const [assets, setAssets] = useState<Assets[]>([])
+    const [dividends, setDividends] = useState<Dividends[]>([])
+    const [patrimony, setPatrimony] = useState<PatrimonyGain[]>([])
+    const [variations, setVariations] = useState<Variations[]>([])
+    const [dataGraph, setDataGraph] = useState<DividendsGrapthEntity[]>([])
     const [open, setOpen] = useState(false)
-    const [itemsList, setItem] = useState([])
-
+    const [itemsList, setItem] = useState<ItemsEntity[]>([])
+    const loading = walletReq.some(result => result.isLoading)
+    const error = walletReq.some(result => result.isError)
     useEffect(() => {
-        getAssets()
-        getDividends()
-        getAports()
-        getPatrimony()
-        getVariatons()
-        getDataGraph()
-    }, [])
+        if (!loading) {
+            setAssets(walletReq[0].data)
+            setDividends(walletReq[1].data)
+            setAports(walletReq[2].data)
+            setPatrimony(walletReq[3].data)
+            setVariations(walletReq[4].data)
+            setDataGraph(walletReq[5].data)
+        }
+    }, [loading])
 
-    const getAssets = () => {
-        getAssetsList()
-            .then((res: any) => {
-                setAssets(res)
-            })
-            .catch((err: any) => {
-                console.error(err)
-                toast.error(err.message)
-            })
-    }
-
-    const getDividends = () => {
-        getDividendsList()
-            .then((res: any) => {
-                setDividends(res)
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
-    }
-    const getAports = () => {
-        getAportsList()
-            .then((res: any) => {
-                setAports(res)
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
-    }
-    const getPatrimony = () => {
-        getPatrimonyList()
-            .then((res: any) => {
-                setPatrimony(res)
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
-    }
-    //todo mensagem de erro
-    const getVariatons = () => {
-        getVariatonsList()
-            .then((res: any) => {
-                setVariations(res)
-            })
-            .catch((err: any) => {
-                console.log(err)
-                toast.error(err.message)
-            })
-    }
-    const getDataGraph = () => {
-        getDividensGraph(selected?.year || new Date().getFullYear())
-            .then((res: any) => {
-                setDataGraph(res)
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
-    }
     const openModal = (index: number) => {
         setOpen(true)
         setItem(aports[index]?.items)
     }
     const handleClose = () => {
         setOpen(false)
+    }
+
+    if (error) {
+        toast.error('Ocorreu um erro em uma requisição')
     }
     return (
         <>

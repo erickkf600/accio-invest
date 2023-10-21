@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
 import { toast } from 'react-toastify'
-import { useSessionStorage } from '../../../components/SelectMonth/toggle.provider'
 import MensageBox from '../../../Shared/MensageBox'
 import useDebounce from '../../../utils/hooks/debounce.hook'
 import { deleteMovimentation } from './../../../service/http/app.delete'
@@ -11,7 +10,6 @@ import AddEstimates from './AddEstimates'
 import './estimates.scss'
 import Template from './template'
 const Estimates: React.FC = () => {
-    const { selected } = useSessionStorage()
     const [search, setSearch] = useState<string | null>()
     const [add, toggleAdd] = useState<boolean>(true)
     const [total, setTototal] = useState<number>()
@@ -24,7 +22,7 @@ const Estimates: React.FC = () => {
     const [limit, setLimit] = useState<number>(5)
 
     const listMovements = async () => {
-        getMovementsList(selected.year || new Date().getFullYear(), limit, page)
+        getMovementsList(new Date().getFullYear(), limit, page)
             .then((res: any) => {
                 setContent(res?.data)
                 setTototal(res?.total)

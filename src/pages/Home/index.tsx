@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { TableContent } from '../../interfaces/table.interface'
-import { getResume } from '../../service/http/app.get'
 import './home.scss'
 import Template from './home.template'
+import useHomeQuery from './service/home.query'
 
 const Home: React.FC<any> = input => {
-    const [data, setData] = useState<any>([])
+    const { data, isError, isLoading } = useHomeQuery()
     const [doughnutContent, setDoughnutContent] = useState<number[]>([])
     const [doughnutLabel, setDoughnutLabel] = useState<string[]>([])
     const [doughnutColor, setDoughnutColor] = useState<string[]>([])
@@ -17,8 +17,26 @@ const Home: React.FC<any> = input => {
 
     const [aports, setAports] = useState<any>([[]])
     useEffect(() => {
-        getResumeData()
-    }, [])
+        createPage()
+    }, [data])
+    if (isError) {
+        toast.error('Ocorreu um erro, tente novamente!')
+    }
+    const createPage = () => {
+        if (!isLoading) {
+            setDoughnutContent(setValue(data, 'alocations', 'total'))
+            setDoughnutLabel(setValue(data, 'alocations', 'type'))
+            setDoughnutColor(setValue(data, 'alocations', 'hex'))
+            setDistContent(setValue(data, 'distribuition', 'qtd'))
+            setDistLabel(setValue(data, 'distribuition', 'title'))
+            setDistColor(setValue(data, 'distribuition', 'hex'))
+            setAports(data?.aports)
+        }
+    }
+    const setValue = (array: any, key: string, key2: string) => {
+        return array[key].map((el: any) => el[key2])
+    }
+
     const tabelMock = [
         { cod: 'MXRF11', value: 0.08, date: '14/12/2022', total: 1 },
         { cod: 'MXRF11', value: 0.08, date: '14/12/2022', total: 1 },
@@ -34,6 +52,7 @@ const Home: React.FC<any> = input => {
             name: 'Cod',
             key: 'cod',
         },
+
         {
             name: 'Valor',
             key: 'value',
@@ -49,31 +68,7 @@ const Home: React.FC<any> = input => {
             currency: true,
         },
     ]
-    const getResumeData = async () => {
-        await getResume()
-            .then((res: any) => {
-                if (Object.keys(res).length) {
-                    setData(res)
-                    setDoughnutContent(setValue(res, 'alocations', 'total'))
-                    setDoughnutLabel(setValue(res, 'alocations', 'type'))
-                    setDoughnutColor(setValue(res, 'alocations', 'hex'))
 
-                    setDistContent(setValue(res, 'distribuition', 'qtd'))
-                    setDistLabel(setValue(res, 'distribuition', 'title'))
-                    setDistColor(setValue(res, 'distribuition', 'hex'))
-
-                    setAports(res.aports)
-                }
-            })
-            .catch(err => {
-                console.error(err)
-                toast.error('Ocorreu um erro, tente novamente!')
-            })
-    }
-
-    const setValue = (array: any, key: string, key2: string) => {
-        return array[key].map((el: any) => el[key2])
-    }
     return (
         <Template
             month={input.month}

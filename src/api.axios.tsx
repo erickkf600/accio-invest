@@ -10,3 +10,5 @@ export const api = (config: AxiosRequestConfig): AxiosInstance => {
     const axiosInstance = axios.create(config)
     return axiosInstance
 }
+
+export const http: AxiosInstance = axios.create(axiosRequestConfiguration)

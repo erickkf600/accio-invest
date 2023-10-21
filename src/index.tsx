@@ -9,25 +9,28 @@ import Routing from './routing'
 import './utils/prototypes'
 import './utils/attributes'
 import { ToastContainer } from 'react-toastify'
-
+import { QueryClient, QueryClientProvider } from 'react-query'
+const queryClient = new QueryClient()
 ReactDOM.render(
-    <Providers>
-        <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-        />
-        <div className="flex-page">
-            <Routing />
-        </div>
-    </Providers>,
+    <QueryClientProvider client={queryClient}>
+        <Providers>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            <div className="flex-page">
+                <Routing />
+            </div>
+        </Providers>
+    </QueryClientProvider>,
     document.getElementById('root'),
 )
 

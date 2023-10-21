@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
 import { toast } from 'react-toastify'
-import { useSessionStorage } from '../../components/SelectMonth/toggle.provider'
 import MensageBox from '../../Shared/MensageBox'
 import useDebounce from '../../utils/hooks/debounce.hook'
 import { deleteMovimentation } from './../../service/http/app.delete'
-import { getMovementsList } from './../../service/http/app.get'
-import { searchMovements } from './../../service/http/search.get'
 import AddOperation from './AddOperation'
 import './movimentacoes.scss'
 import Template from './template'
+import useMovimentsQuery from './service/moviments.query'
+import { http } from '../../api.axios'
+import { useQueryClient } from 'react-query'
 const Movimentacoes: React.FC = () => {
-    const { selected } = useSessionStorage()
+    const client = useQueryClient()
     const [search, setSearch] = useState<string | null>()
     const [add, toggleAdd] = useState<boolean>(false)
     const [total, setTototal] = useState<number>()
@@ -22,22 +22,24 @@ const Movimentacoes: React.FC = () => {
 
     const [page, setPage] = useState<number>(1)
     const [limit, setLimit] = useState<number>(5)
+    const { data, isError, isLoading } = useMovimentsQuery({
+        page: page,
+        limit: limit,
+    })
     const filters = [
         { type: 1, text: 'compra' },
         { type: 2, text: 'venda' },
         { type: 3, text: 'dividendos' },
     ]
-
-    const listMovements = async () => {
-        getMovementsList(selected.year || new Date().getFullYear(), limit, page)
-            .then((res: any) => {
-                setContent(res?.data)
-                setTototal(res?.total)
-                setContentFiltered(res?.data)
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
+    const listMovements = () => {
+        if (!isLoading) {
+            setContent(data?.data)
+            setTototal(data?.total)
+            setContentFiltered(data?.data)
+        }
+    }
+    if (isError) {
+        toast.error('Ocorreu um erro na requisição, tente novamente!')
     }
 
     const setEdit = (item: any) => {
@@ -50,6 +52,7 @@ const Movimentacoes: React.FC = () => {
             deleteMovimentation(id)
                 .then(() => {
                     toast.success('Deletado com sucesso')
+                    client.invalidateQueries(['moviments'])
                     close()
                 })
                 .catch(err => {
@@ -87,13 +90,13 @@ const Movimentacoes: React.FC = () => {
     useEffect(() => {
         if (debouncedSearch) searchData()
         else listMovements()
-    }, [debouncedSearch, page, limit])
+    }, [debouncedSearch, page, limit, data])
 
     const searchData = async () => {
-        searchMovements(search || '')
+        http.get(`moviments/search?search=${search || ''}`)
             .then((res: any) => {
-                setContent(res)
-                setContentFiltered(res)
+                setContent(res.data)
+                setContentFiltered(res.data)
                 setTototal(0)
             })
             .catch((err: any) => {
@@ -132,13 +135,14 @@ const Movimentacoes: React.FC = () => {
                 <AddOperation
                     content={editContent}
                     closeForm={() => {
-                        toggleAdd(!add), listMovements()
+                        toggleAdd(!add), client.invalidateQueries(['moviments'])
                     }}
                 />
             ) : (
                 <Template
                     content={contentFiltetred}
                     total={total}
+                    loading={isLoading}
                     changePage={(e: number) => setPage(e)}
                     changeLimit={(e: number) => setLimit(e)}
                     setIsEdit={(e: any) => setEdit(e)}

@@ -104,6 +104,10 @@ const Template: React.FC<any> = input => {
                                 ))}
                             </Table>
                         </form>
+                    ) : input.loaading ? (
+                        <h1 style={{ marginTop: '20px', textAlign: 'center' }}>
+                            carregando...
+                        </h1>
                     ) : (
                         <h1 style={{ marginTop: '20px', textAlign: 'center' }}>
                             sem dados
