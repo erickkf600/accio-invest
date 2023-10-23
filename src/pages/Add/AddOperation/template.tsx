@@ -115,7 +115,7 @@ const Template: React.FC<any> = input => {
                                     <TextField
                                         label="Valor Unitário"
                                         inputProps={{
-                                            'data-currency': '',
+                                            // 'data-currency': '',
                                             inputMode: 'numeric',
                                             pattern: '[0-9]*',
                                         }}
