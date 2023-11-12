@@ -131,13 +131,12 @@ const AddOperation: React.FC<any> = input => {
             0,
         )
         return values.map((ell: any) => {
-            const calc = Number(
-                new Intl.NumberFormat('en-US').format((fees / sum) * ell.total),
-            )
+            const calc = Number(((fees / sum) * ell.total).toFixed(3))
             const math = sell ? ell.total - calc : ell.total + calc
+            const calcTotal = Number(math.toFixed(3))
             return Object.assign(ell, {
                 fee: calc,
-                total: Number(new Intl.NumberFormat('en-US').format(math)),
+                total: calcTotal,
             })
         })
     }
